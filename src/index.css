@@ -1,0 +1,11 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.carousel .thumbs {
+  text-align: center;
+}
+.slider .slide img {
+  height: 604px;
+  object-fit: cover;
+}
