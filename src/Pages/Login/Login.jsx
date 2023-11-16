@@ -16,6 +16,8 @@ const Login = () => {
   const navigate = useNavigate();
   const location = useLocation();
 
+  console.log(location);
+
   useEffect(() => {
     loadCaptchaEnginge(6);
   }, []);
@@ -40,14 +42,14 @@ const Login = () => {
     const form = e.target;
     const email = form.email.value;
     const password = form.password.value;
-    console.log(email, password);
 
     login(email, password).then((result) => {
       const user = result.user;
       console.log(user);
       Swal.fire('Successfully Logged In');
-      navigate(location?.state ? location.state : '/');
+      navigate(location?.state ? location.state.from : '/');
     });
+    
   };
 
   return (
@@ -99,7 +101,6 @@ const Login = () => {
               <div className="form-control">
                 <label className="label">
                   <LoadCanvasTemplate />
-                  {/* <LoadCanvasTemplateNoReload /> */}
                 </label>
                 <input
                   type="text"
