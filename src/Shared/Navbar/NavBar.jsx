@@ -82,7 +82,7 @@ const NavBar = () => {
           <ul className="menu menu-horizontal px-1">{navLinks}</ul>
         </div>
         <div className="navbar-end">
-          <Link>
+          <Link to="/dashboard/cart">
             <button className="btn">
               <FaShoppingCart></FaShoppingCart>
               <div className="badge badge-secondary">+{cart.length}</div>
