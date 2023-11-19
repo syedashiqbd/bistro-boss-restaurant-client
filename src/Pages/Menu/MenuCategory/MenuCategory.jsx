@@ -19,12 +19,14 @@ const MenuCategory = ({ item, loading }) => {
           ))}
         </div>
       )}
-      <Link to={`/order/${category}`}>
-        <Button
-          title={`ORDER YOUR FAVOURITE ${category}`}
-          position={'text-center'}
-        ></Button>
-      </Link>
+      <div className="mb-10">
+        <Link to={`/order/${category}`}>
+          <Button
+            title={`ORDER YOUR FAVOURITE ${category}`}
+            position={'text-center'}
+          ></Button>
+        </Link>
+      </div>
     </div>
   );
 };

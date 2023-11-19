@@ -10,6 +10,11 @@ import Secret from '../Shared/Secret/Secret';
 import Cart from '../Pages/Dashboard/Cart/Cart';
 import Dashboard from '../Layout/Dashboard';
 import AllUsers from '../Pages/Dashboard/Cart/AllUsers/AllUsers';
+import AddItems from '../Pages/Dashboard/AddItems/AddItems';
+import AdminRoute from './AdminRoute';
+import ManageItems from '../Pages/Dashboard/ManageItems/ManageItems';
+import UpdateItem from '../Pages/Dashboard/UpdateItem/UpdateItem';
+import useAxiosSecure from '../Hooks/useAxiosSecure';
 
 export const router = createBrowserRouter([
   {
@@ -54,13 +59,45 @@ export const router = createBrowserRouter([
       </PrivateRoute>
     ),
     children: [
+      //  normal user access
       {
         path: 'cart',
         element: <Cart></Cart>,
       },
+      // admin access
+      {
+        path: 'addItems',
+        element: (
+          <AdminRoute>
+            <AddItems></AddItems>
+          </AdminRoute>
+        ),
+      },
+      {
+        path: 'updateItem/:id',
+        element: (
+          <AdminRoute>
+            <UpdateItem></UpdateItem>
+          </AdminRoute>
+        ),
+        loader: ({ params }) => fetch(`http://localhost:5000/menu/${params.id}`),
+      },
+
+      {
+        path: 'manageItems',
+        element: (
+          <AdminRoute>
+            <ManageItems></ManageItems>
+          </AdminRoute>
+        ),
+      },
       {
         path: 'users',
-        element: <AllUsers></AllUsers>,
+        element: (
+          <AdminRoute>
+            <AllUsers></AllUsers>
+          </AdminRoute>
+        ),
       },
     ],
   },

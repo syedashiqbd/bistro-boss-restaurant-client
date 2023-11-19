@@ -25,7 +25,7 @@ const Menu = () => {
       </Helmet>
 
       {/* Offered part */}
-      <div>
+      <div className='space-y-5'>
         <Cover
           img={menuImg}
           title={'our menu'}

@@ -1,16 +1,19 @@
-import { FaTrashAlt } from 'react-icons/fa';
-import useCart from '../../../Hooks/useCart';
+import { FaEdit, FaTrashAlt } from 'react-icons/fa';
 import SectionTitle from '../../../components/SectionTitle';
-import useAxiosSecure from '../../../Hooks/useAxiosSecure';
+import useMenu from '../../../Hooks/useMenu';
 import Swal from 'sweetalert2';
+import useAxiosSecure from '../../../Hooks/useAxiosSecure';
+import { Link } from 'react-router-dom';
 
-const Cart = () => {
-  const [cart, refetch] = useCart();
-  const totalPrice = cart.reduce((total, item) => total + item.price, 0);
-
+const ManageItems = () => {
+  const [menu, refetch] = useMenu();
   const axiosInstance = useAxiosSecure();
 
-  const handleDelete = (id) => {
+  const handleUpdate = (item) => {
+    console.log(item);
+  };
+
+  const handleDelete = (item) => {
     Swal.fire({
       title: 'Are you sure?',
       text: "You won't be able to revert this!",
@@ -19,17 +22,19 @@ const Cart = () => {
       confirmButtonColor: '#3085d6',
       cancelButtonColor: '#d33',
       confirmButtonText: 'Yes, delete it!',
-    }).then((result) => {
+    }).then(async (result) => {
       if (result.isConfirmed) {
-        axiosInstance.delete(`/carts/${id}`).then((res) => {
+        await axiosInstance.delete(`/menu/${item._id}`).then((res) => {
           console.log(res.data);
           if (res.data.deletedCount > 0) {
-            Swal.fire({
-              title: 'Deleted!',
-              text: 'Item has been deleted.',
-              icon: 'success',
-            });
+            //refetch to update the UI
             refetch();
+            Swal.fire({
+              title: `${item.name}has been deleted!`,
+              icon: 'success',
+              showConfirmButton: false,
+              timer: 1500,
+            });
           }
         });
       }
@@ -39,17 +44,13 @@ const Cart = () => {
   return (
     <div className="w-10/12 mx-auto mt-5 ">
       <SectionTitle
-        subHeading={'---My Cart---'}
-        heading={'wanna add more?'}
+        subHeading={'---Hurry Up!---'}
+        heading={'MANAGE ALL ITEMS'}
       ></SectionTitle>
       <div className="flex justify-between items-center">
         <h2 className="text-3xl font-semibold uppercase">
-          Total Orders : {cart.length}
+          Total Items : {menu.length}
         </h2>
-        <h2 className="text-3xl font-semibold uppercase">
-          Total Price: $ {totalPrice}
-        </h2>
-        <button className="btn btn-primary px-6 text-xl">Pay</button>
       </div>
 
       {/* Table */}
@@ -63,20 +64,18 @@ const Cart = () => {
               <th>Item Name</th>
               <th>Price</th>
               <th className="text-center">Action</th>
+              <th className="text-center">Action</th>
             </tr>
           </thead>
           <tbody>
-            {cart.map((item, index) => (
+            {menu.map((item, index) => (
               <tr key={item._id}>
                 <th>{index + 1}</th>
                 <td>
                   <div className="flex items-center gap-3">
                     <div className="avatar">
                       <div className="rounded-xl w-12 h-12">
-                        <img
-                          src={item.image}
-                          alt="Avatar Tailwind CSS Component"
-                        />
+                        <img src={item.image} />
                       </div>
                     </div>
                   </div>
@@ -86,8 +85,15 @@ const Cart = () => {
                 </td>
                 <td>$ {item.price}</td>
                 <th className="text-center">
+                  <Link to={`/dashboard/updateItem/${item._id}`}>
+                    <button className="text-orange-600 text-xl">
+                      <FaEdit></FaEdit>
+                    </button>
+                  </Link>
+                </th>
+                <th className="text-center">
                   <button
-                    onClick={() => handleDelete(item._id)}
+                    onClick={() => handleDelete(item)}
                     className="text-orange-600 text-xl"
                   >
                     <FaTrashAlt></FaTrashAlt>
@@ -101,4 +107,4 @@ const Cart = () => {
     </div>
   );
 };
-export default Cart;
+export default ManageItems;
