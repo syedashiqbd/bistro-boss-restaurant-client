@@ -30,7 +30,7 @@ const FoodCard = ({ item }) => {
         console.log(res.data);
         if (res.data.insertedId) {
           Swal.fire({
-            position: 'top-center',
+            // position: 'top-center',
             icon: 'success',
             title: `${name} added to your cart`,
             showConfirmButton: false,
@@ -60,7 +60,7 @@ const FoodCard = ({ item }) => {
   return (
     <div className="card w-96 bg-base-100 shadow-xl flex flex-col">
       <figure className="flex-shrink-0 ">
-        <img src={image} className='w-full h-[250px] object-cover' />
+        <img src={image} className="w-full h-[250px] object-cover" />
       </figure>
       <p className="bg-black text-white absolute right-0 mr-5 mt-5 py-1.5 px-3 rounded">
         ${price}

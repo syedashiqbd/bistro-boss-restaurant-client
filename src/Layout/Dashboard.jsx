@@ -91,9 +91,9 @@ const Dashboard = () => {
                   </NavLink>
                 </li>
                 <li>
-                  <NavLink to="/dashboard/myBookings">
+                  <NavLink to="/dashboard/paymentHistory">
                     <FaList></FaList>
-                    My Bookings
+                    Payment History
                   </NavLink>
                 </li>{' '}
               </>
