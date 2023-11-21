@@ -6,7 +6,7 @@ import useAxiosSecure from '../../../Hooks/useAxiosSecure';
 import { Link } from 'react-router-dom';
 
 const ManageItems = () => {
-  const [menu, refetch] = useMenu();
+  const [menu, , refetch] = useMenu();
   const axiosInstance = useAxiosSecure();
 
   const handleUpdate = (item) => {
@@ -54,7 +54,10 @@ const ManageItems = () => {
       </div>
 
       {/* Table */}
-      <div className="overflow-x-auto mt-10 rounded-t-lg">
+      <div
+        className="overflow-x-auto mt-5
+ rounded-t-lg"
+      >
         <table className="table">
           {/* head */}
           <thead className="bg-primary text-white  ">

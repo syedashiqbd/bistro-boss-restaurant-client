@@ -69,7 +69,10 @@ const AllUsers = () => {
       </h2>
 
       {/* Table */}
-      <div className="overflow-x-auto mt-10 rounded-t-lg">
+      <div
+        className="overflow-x-auto mt-5
+ rounded-t-lg"
+      >
         <table className="table">
           {/* head */}
           <thead className="bg-primary text-white  ">

@@ -4,6 +4,7 @@ import useAxiosSecure from '../../../Hooks/useAxiosSecure';
 import useCart from '../../../Hooks/useCart';
 import { AuthContext } from '../../../Providers/AuthProvider';
 import Swal from 'sweetalert2';
+import { useNavigate } from 'react-router-dom';
 
 const CheckoutForm = () => {
   const [error, setError] = useState('');
@@ -15,6 +16,7 @@ const CheckoutForm = () => {
   const { user } = useContext(AuthContext);
   const [cart, refetch] = useCart();
   const totalPrice = cart.reduce((total, item) => total + item.price, 0);
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (totalPrice > 0) {
@@ -74,7 +76,7 @@ const CheckoutForm = () => {
           email: user.email,
           price: totalPrice,
           transactionId: paymentIntent.id,
-          data: new Date(), //utc date convert by moment js
+          date: new Date(), //utc date convert by moment js
           cartIds: cart.map((item) => item._id),
           menuIds: cart.map((item) => item.menuId),
           status: 'pending',
@@ -90,6 +92,7 @@ const CheckoutForm = () => {
             timer: 1000,
           });
           refetch();
+          navigate('/dashboard/paymentHistory');
         }
       }
     }
